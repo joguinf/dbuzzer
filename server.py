@@ -4,8 +4,13 @@ import shlex
 
 class EchoHandler(asyncore.dispatcher_with_send):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, ident, *args, **kwargs):
+        
         asyncore.dispatcher_with_send.__init__(self, *args, **kwargs)
+
+        self.ident = ident
+        self.send("your id is %s\n" % str(ident))
+        
 
     def handle_read(self):
         data = self.recv(8192)
@@ -48,7 +53,7 @@ ___________________________________
 
 """
             sock.send(greeting)
-            handler = EchoHandler(sock)
+            handler = EchoHandler(addr, sock)
 
 
 server = EchoServer('localhost', 8080)
