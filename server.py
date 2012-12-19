@@ -4,6 +4,9 @@ import shlex
 
 class EchoHandler(asyncore.dispatcher_with_send):
 
+    def __init__(self, *args, **kwargs):
+        asyncore.dispatcher_with_send.__init__(self, *args, **kwargs)
+
     def handle_read(self):
         data = self.recv(8192)
         if data:
